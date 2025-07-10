@@ -1,6 +1,7 @@
-# Earthworm Jim Decomp
+# Earthworm Jim
 
 ## Project Structure
+```
 earthworm_jim/
 │
 ├── memory.py       ← Memory abstraction (read/write, bounds, endianness)
@@ -8,5 +9,8 @@ earthworm_jim/
 ├── flags.py        ← Condition codes (Z, N, C, V)
 ├── cpu.py          ← Instruction emulation (MOVE, ADD, SUB, etc.)
 ├── main.py         ← Load ROM segment, emulate instructions, print state
+```
+
+<br>
 
 ## Compilation and Gameplay
