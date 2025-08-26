@@ -821,7 +821,7 @@ void vdp_draw_string(void) {
   return;
 }
 
-void FUN_001a27a0(void) {
+void system_init_hardware(void) {
   undefined4 in_D0;
   undefined4 uVar1;
   short sVar2;
@@ -862,7 +862,7 @@ void startup_logo_sequence(void) {
 
   puVar3 = (undefined1 *)0xfffbd8;
   vdp_irq_handler = (vdp_irq_handler_t)0x2456da;
-  FUN_00247652();
+  poll_vdp_ready();
   _DAT_00c00004 = 0x929c;
   vdp_irq_handler = (vdp_irq_handler_t)0x245770;
   FUN_0024cba0();
@@ -908,7 +908,7 @@ void startup_logo_sequence(void) {
       _DAT_00ffa6bc = 0xbc614e;
     }
     *(undefined4 *)(puVar3 + -4) = 0x245800;
-    FUN_002476ac();
+    flush_vram_fifo();
     *(undefined4 *)(puVar3 + -4) = 0x245804;
     FUN_0024b47a();
     *(undefined4 *)(puVar3 + -4) = 0x245808;
@@ -1019,11 +1019,11 @@ void startup_logo_sequence(void) {
       *(undefined4 *)(puVar3 + -4) = 0x245920;
       FUN_00247210();
       *(undefined4 *)(puVar3 + -4) = 0x245924;
-      FUN_0024669e();
+      set_vram_tiles();
       *(undefined4 *)(puVar3 + -4) = 0x245928;
-      FUN_0024690c();
+      update_controller_state();
       *(undefined4 *)(puVar3 + -4) = 0x24592c;
-      FUN_00246860();
+      initialize_input_state();
       *(undefined4 *)(puVar3 + -4) = 0x245930;
       apply_scroll_offsets();
       *(undefined4 *)(puVar3 + -4) = 0x245934;
@@ -1031,7 +1031,7 @@ void startup_logo_sequence(void) {
       *(undefined4 *)(puVar3 + -4) = 0x245938;
       render_menu_text();
       *(undefined4 *)(puVar3 + -4) = 0x24593c;
-      FUN_002464c8();
+      apply_palette_colors();
       *(undefined4 *)(puVar3 + -4) = 0x245940;
       FUN_00248e58();
       *(undefined4 *)(puVar3 + -4) = 0x245944;
@@ -1077,7 +1077,7 @@ void startup_logo_sequence(void) {
     *(undefined4 *)(puVar3 + -4) = 0x24d6aa;
     FUN_0024cb8c();
     *(undefined4 *)(puVar3 + -4) = 0x24d6ae;
-    FUN_00247652();
+    poll_vdp_ready();
     *(undefined4 *)(puVar3 + -4) = 0x24d6b2;
     FUN_0024d744();
   } while( true );
@@ -1098,7 +1098,7 @@ void vblank_isr(void) {
   char cVar4;
   undefined8 uVar5;
   
-  FUN_00247652();
+  poll_vdp_ready();
   _DAT_00c00004 = 0x929c;
   FUN_0024cba0();
   FUN_0024d25a();
@@ -1137,7 +1137,7 @@ void vblank_isr(void) {
       _DAT_00ffa6bc = 0xbc614e;
     }
     *(undefined4 *)((int)register0x0000003c + -4) = 0x245800;
-    FUN_002476ac();
+    flush_vram_fifo();
     *(undefined4 *)((int)register0x0000003c + -4) = 0x245804;
     FUN_0024b47a();
     *(undefined4 *)((int)register0x0000003c + -4) = 0x245808;
@@ -1247,11 +1247,11 @@ void vblank_isr(void) {
       *(undefined4 *)((int)register0x0000003c + -4) = 0x245920;
       FUN_00247210();
       *(undefined4 *)((int)register0x0000003c + -4) = 0x245924;
-      FUN_0024669e();
+      set_vram_tiles();
       *(undefined4 *)((int)register0x0000003c + -4) = 0x245928;
-      FUN_0024690c();
+      update_controller_state();
       *(undefined4 *)((int)register0x0000003c + -4) = 0x24592c;
-      FUN_00246860();
+      initialize_input_state();
       *(undefined4 *)((int)register0x0000003c + -4) = 0x245930;
       apply_scroll_offsets();
       *(undefined4 *)((int)register0x0000003c + -4) = 0x245934;
@@ -1259,7 +1259,7 @@ void vblank_isr(void) {
       *(undefined4 *)((int)register0x0000003c + -4) = 0x245938;
       render_menu_text();
       *(undefined4 *)((int)register0x0000003c + -4) = 0x24593c;
-      FUN_002464c8();
+      apply_palette_colors();
       *(undefined4 *)((int)register0x0000003c + -4) = 0x245940;
       FUN_00248e58();
       *(undefined4 *)((int)register0x0000003c + -4) = 0x245944;
@@ -1305,7 +1305,7 @@ void vblank_isr(void) {
     *(undefined4 *)((int)register0x0000003c + -4) = 0x24d6aa;
     FUN_0024cb8c();
     *(undefined4 *)((int)register0x0000003c + -4) = 0x24d6ae;
-    FUN_00247652();
+    poll_vdp_ready();
     *(undefined4 *)((int)register0x0000003c + -4) = 0x24d6b2;
     FUN_0024d744();
   } while( true );
@@ -1397,7 +1397,7 @@ void update_menu_animation(void) {
       _DAT_00ffa6bc = 0xbc614e;
     }
     *(undefined4 *)(puVar5 + -4) = 0x245800;
-    FUN_002476ac();
+    flush_vram_fifo();
     *(undefined4 *)(puVar5 + -4) = 0x245804;
     FUN_0024b47a();
     *(undefined4 *)(puVar5 + -4) = 0x245808;
@@ -1507,11 +1507,11 @@ void update_menu_animation(void) {
       *(undefined4 *)(puVar5 + -4) = 0x245920;
       FUN_00247210();
       *(undefined4 *)(puVar5 + -4) = 0x245924;
-      FUN_0024669e();
+      set_vram_tiles();
       *(undefined4 *)(puVar5 + -4) = 0x245928;
-      FUN_0024690c();
+      update_controller_state();
       *(undefined4 *)(puVar5 + -4) = 0x24592c;
-      FUN_00246860();
+      initialize_input_state();
       *(undefined4 *)(puVar5 + -4) = 0x245930;
       apply_scroll_offsets();
       *(undefined4 *)(puVar5 + -4) = 0x245934;
@@ -1519,7 +1519,7 @@ void update_menu_animation(void) {
       *(undefined4 *)(puVar5 + -4) = 0x245938;
       render_menu_text();
       *(undefined4 *)(puVar5 + -4) = 0x24593c;
-      FUN_002464c8();
+      apply_palette_colors();
       *(undefined4 *)(puVar5 + -4) = 0x245940;
       FUN_00248e58();
       *(undefined4 *)(puVar5 + -4) = 0x245944;
@@ -1565,7 +1565,7 @@ void update_menu_animation(void) {
     *(undefined4 *)(puVar5 + -4) = 0x24d6aa;
     FUN_0024cb8c();
     *(undefined4 *)(puVar5 + -4) = 0x24d6ae;
-    FUN_00247652();
+    poll_vdp_ready();
     *(undefined4 *)(puVar5 + -4) = 0x24d6b2;
     FUN_0024d744();
     DAT_00ffff98 = '\0';
@@ -1659,7 +1659,7 @@ LAB_00245bd6:
     FUN_0024ac98();
     FUN_0024cb8c();
     FUN_0024792e();
-    FUN_002478c8();
+    load_level_tiles();
     FUN_0024b3aa();
     FUN_0024bda8();
     FUN_0024ac50();
@@ -1715,7 +1715,7 @@ LAB_00245bd6:
         _DAT_00ffa6bc = 0xbc614e;
       }
       *(undefined4 *)(puVar5 + -4) = 0x245800;
-      FUN_002476ac();
+      flush_vram_fifo();
       *(undefined4 *)(puVar5 + -4) = 0x245804;
       FUN_0024b47a();
       *(undefined4 *)(puVar5 + -4) = 0x245808;
@@ -1825,11 +1825,11 @@ LAB_00245bd6:
         *(undefined4 *)(puVar5 + -4) = 0x245920;
         FUN_00247210();
         *(undefined4 *)(puVar5 + -4) = 0x245924;
-        FUN_0024669e();
+        set_vram_tiles();
         *(undefined4 *)(puVar5 + -4) = 0x245928;
-        FUN_0024690c();
+        update_controller_state();
         *(undefined4 *)(puVar5 + -4) = 0x24592c;
-        FUN_00246860();
+        initialize_input_state();
         *(undefined4 *)(puVar5 + -4) = 0x245930;
         apply_scroll_offsets();
         *(undefined4 *)(puVar5 + -4) = 0x245934;
@@ -1837,7 +1837,7 @@ LAB_00245bd6:
         *(undefined4 *)(puVar5 + -4) = 0x245938;
         render_menu_text();
         *(undefined4 *)(puVar5 + -4) = 0x24593c;
-        FUN_002464c8();
+        apply_palette_colors();
         *(undefined4 *)(puVar5 + -4) = 0x245940;
         FUN_00248e58();
         *(undefined4 *)(puVar5 + -4) = 0x245944;
@@ -1883,7 +1883,7 @@ LAB_00245bd6:
       *(undefined4 *)(puVar5 + -4) = 0x24d6aa;
       FUN_0024cb8c();
       *(undefined4 *)(puVar5 + -4) = 0x24d6ae;
-      FUN_00247652();
+      poll_vdp_ready();
       *(undefined4 *)(puVar5 + -4) = 0x24d6b2;
       FUN_0024d744();
       DAT_00ffff98 = '\0';
@@ -2289,13 +2289,13 @@ LAB_00245fdc:
       _DAT_00fffdda = 0x18;
     }
   }
-  FUN_00246422();
+  load_title_graphics();
   DAT_00fffd0b = 0;
   return;
 }
 
 // WARNING: Globals starting with '_' overlap smaller symbols at the same address
-void FUN_00246422(void) {
+void load_title_graphics(void) {
   uint uVar1;
   byte bVar2;
   char cVar3;
@@ -2353,7 +2353,7 @@ void FUN_00246422(void) {
 }
 
 // WARNING: Globals starting with '_' overlap smaller symbols at the same address
-void FUN_002464c8(void) {
+void apply_palette_colors(void) {
   bool bVar1;
   
   if ((((((DAT_00fffd23 != '\0') || (DAT_00fffd0e != '\0')) || (DAT_00fffd4b != '\0')) ||
@@ -2438,7 +2438,7 @@ void FUN_002464c8(void) {
 }
 
 // WARNING: Globals starting with '_' overlap smaller symbols at the same address
-void FUN_0024669e(void) {
+void set_vram_tiles(void) {
   bool bVar1;
   
   if ((((DAT_00fffd23 == '\0') && (DAT_00ffff6b != '\0')) && (DAT_00fffd11 != '`')) &&
@@ -2528,7 +2528,7 @@ void FUN_0024669e(void) {
 }
 
 // WARNING: Globals starting with '_' overlap smaller symbols at the same address
-void FUN_00246860(void) {
+void initialize_input_state(void) {
   bool bVar1;
   
   if ((((DAT_00fffd23 == '\0') && (DAT_00fffd4b == '\0')) && (DAT_00fffddf == '\0')) &&
@@ -2568,7 +2568,7 @@ LAB_002468f2:
 }
 
 // WARNING: Globals starting with '_' overlap smaller symbols at the same address
-void FUN_0024690c(void) {
+void update_controller_state(void) {
   if ((DAT_00fffd13 != '\0') && (-1 < _DAT_00ffa6ec)) {
     if (DAT_00fffcf8 == '\0') {
       if ((DAT_00ffa6cf & 1) == 0) {
@@ -2577,7 +2577,7 @@ void FUN_0024690c(void) {
       _DAT_00ffa6ec = 0;
       if (DAT_00fffd23 == '\0') {
         if (DAT_00fffd25 != '\0') {
-          FUN_00246ab2();
+          play_title_music();
           DAT_00fffd25 = '\0';
         }
         if (DAT_00fffc83 == '\0') {
@@ -2596,7 +2596,7 @@ void FUN_0024690c(void) {
               if (0x8f < _DAT_00fffdb6) {
                 _DAT_00fffdb6 = 0;
               }
-              FUN_00246ab2();
+              play_title_music();
             }
           }
         }
@@ -2607,16 +2607,16 @@ void FUN_0024690c(void) {
             if (0x8f < _DAT_00fffdb6) {
               _DAT_00fffdb6 = 0;
             }
-            FUN_00246a78();
+            start_sound_driver();
           }
         }
       }
-      FUN_00246aec();
+      update_audio_buffer();
       DAT_00fffd14 = 0xff;
       return;
     }
     if (DAT_00fffcfa != '\0') {
-      FUN_00246ab2();
+      play_title_music();
       _DAT_00ffa6ea = 0;
       _DAT_00ffa6ec = 0;
       _DAT_00fffcce = 0;
@@ -2624,7 +2624,7 @@ void FUN_0024690c(void) {
       DAT_00fffd25 = 0;
       DAT_00fffd14 = 0xff;
       DAT_00fffd0b = 0;
-      FUN_00246aec();
+      update_audio_buffer();
       return;
     }
   }
@@ -2633,7 +2633,7 @@ void FUN_0024690c(void) {
 }
 
 // WARNING: Globals starting with '_' overlap smaller symbols at the same address
-void FUN_00246a78(void) {
+void start_sound_driver(void) {
   if (DAT_00fffd23 == '\0') {
     _DAT_00ffa6f2 = *(undefined4 *)((int)&PTR_DAT_001adc0c + (int)_DAT_00fffdb6);
     DAT_00ffa709 = 0;
@@ -2645,7 +2645,7 @@ void FUN_00246a78(void) {
 }
 
 // WARNING: Globals starting with '_' overlap smaller symbols at the same address
-void FUN_00246ab2(void) {
+void play_title_music(void) {
   if (DAT_00fffd23 == '\0') {
     _DAT_00ffa6f2 = *(undefined4 *)((int)&PTR_DAT_001adc0c + (int)_DAT_00fffdb6);
     DAT_00ffa709 = 0;
@@ -2657,13 +2657,13 @@ void FUN_00246ab2(void) {
 }
 
 // WARNING: Globals starting with '_' overlap smaller symbols at the same address
-void FUN_00246aec(void) {
+void update_audio_buffer(void) {
   _DAT_00ffa67c = (_DAT_00ffa684 & 0xfff0 | 4) - _DAT_00ffa678;
   return;
 }
 
 // WARNING: Globals starting with '_' overlap smaller symbols at the same address
-void FUN_00246b08(void) {
+void stop_audio_playback(void) {
   undefined4 unaff_A2;
   
   if (DAT_00fffddf != '\0') {
@@ -2765,7 +2765,7 @@ LAB_00246ba4:
 }
 
 // WARNING: Globals starting with '_' overlap smaller symbols at the same address
-void FUN_00246fb4(void) {
+void toggle_sprite_visibility(void) {
   ushort uVar1;
   short sVar2;
   
@@ -2789,7 +2789,7 @@ void FUN_00246fb4(void) {
 }
 
 // WARNING: Globals starting with '_' overlap smaller symbols at the same address
-void FUN_00246ffc(void) {
+void vblank_wait_sync(void) {
   ushort uVar1;
   
   uVar1 = _DAT_00ffff3a - _DAT_00fffe9c;
@@ -2859,7 +2859,7 @@ LAB_00246d64:
   if (DAT_00fffddf != '\0') {
     return in_D0w;
   }
-  uVar1 = FUN_00246b08();
+  uVar1 = stop_audio_playback();
   if (DAT_00fffdf9 != '\0') {
     if (_DAT_00ffa682 < 0x94) {
       if (DAT_00fffdea != 0x10) {
@@ -3047,8 +3047,8 @@ LAB_00246f76:
     }
     return uVar1;
   }
-  FUN_00246fb4();
-  uVar1 = FUN_00246ffc();
+  toggle_sprite_visibility();
+  uVar1 = vblank_wait_sync();
   if (DAT_00fffd24 != '\0') {
     if (DAT_00ffff60 != 0) {
       DAT_00ffff60 = DAT_00ffff60 - 1;
@@ -3180,14 +3180,14 @@ void vdp_enable_vblank_interrupt(void) {
     DAT_00ffff9c = 1;
     DAT_00ffff9f = 1;
     DAT_00ffa6ab = 1;
-    FUN_001a27a0();
+    system_init_hardware();
     _DAT_00ff9936 = &PTR_PTR_0000294c;
   }
   return;
 }
 
 // WARNING: Globals starting with '_' overlap smaller symbols at the same address
-void FUN_00247652(void) {
+void poll_vdp_ready(void) {
   FUN_002cbd3e();
   FUN_0024790a();
   FUN_0024b3aa();
@@ -3202,7 +3202,7 @@ void FUN_00247652(void) {
 }
 
 // WARNING: Globals starting with '_' overlap smaller symbols at the same address
-void FUN_002476ac(void) {
+void flush_vram_fifo(void) {
   byte bVar1;
   short sVar2;
   uint uVar3;
@@ -3217,7 +3217,7 @@ void FUN_002476ac(void) {
   FUN_0024791c();
   FUN_0024792e();
   FUN_0024ac98();
-  FUN_002478c8();
+  load_level_tiles();
   uVar3 = (uint)DAT_00ffa692;
   iVar4 = uVar3 * 0x40;
   _DAT_00ffa676 = *(undefined2 *)(&DAT_0025bbc4 + iVar4);
@@ -3272,7 +3272,7 @@ void FUN_002476ac(void) {
   return;
 }
 
-void FUN_002478c8(void) {
+void load_level_tiles(void) {
   FUN_0024adf6();
   FUN_0024be54();
   DAT_00fffd0b = 0;
@@ -6986,7 +6986,7 @@ LAB_002457aa:
         _DAT_00ffa6bc = 0xbc614e;
       }
       *(undefined4 *)(puVar11 + -4) = 0x245800;
-      FUN_002476ac();
+      flush_vram_fifo();
       *(undefined4 *)(puVar11 + -4) = 0x245804;
       FUN_0024b47a();
       *(undefined4 *)(puVar11 + -4) = 0x245808;
@@ -7096,11 +7096,11 @@ LAB_002457aa:
         *(undefined4 *)(puVar11 + -4) = 0x245920;
         FUN_00247210();
         *(undefined4 *)(puVar11 + -4) = 0x245924;
-        FUN_0024669e();
+        set_vram_tiles();
         *(undefined4 *)(puVar11 + -4) = 0x245928;
-        FUN_0024690c();
+        update_controller_state();
         *(undefined4 *)(puVar11 + -4) = 0x24592c;
-        FUN_00246860();
+        initialize_input_state();
         *(undefined4 *)(puVar11 + -4) = 0x245930;
         apply_scroll_offsets();
         *(undefined4 *)(puVar11 + -4) = 0x245934;
@@ -7108,7 +7108,7 @@ LAB_002457aa:
         *(undefined4 *)(puVar11 + -4) = 0x245938;
         render_menu_text();
         *(undefined4 *)(puVar11 + -4) = 0x24593c;
-        FUN_002464c8();
+        apply_palette_colors();
         *(undefined4 *)(puVar11 + -4) = 0x245940;
         FUN_00248e58();
         *(undefined4 *)(puVar11 + -4) = 0x245944;
@@ -7154,7 +7154,7 @@ LAB_002457aa:
       *(undefined4 *)(puVar11 + -4) = 0x24d6aa;
       FUN_0024cb8c();
       *(undefined4 *)(puVar11 + -4) = 0x24d6ae;
-      FUN_00247652();
+      poll_vdp_ready();
       *(undefined4 *)(puVar11 + -4) = 0x24d6b2;
       FUN_0024d744();
       DAT_00ffff98 = '\0';
@@ -8823,7 +8823,7 @@ void FUN_0024d5c0(void) {
             _DAT_00ffa6bc = 0xbc614e;
           }
           *(undefined4 *)(puVar5 + -4) = 0x245800;
-          FUN_002476ac();
+          flush_vram_fifo();
           *(undefined4 *)(puVar5 + -4) = 0x245804;
           FUN_0024b47a();
           *(undefined4 *)(puVar5 + -4) = 0x245808;
@@ -8933,11 +8933,11 @@ void FUN_0024d5c0(void) {
             *(undefined4 *)(puVar5 + -4) = 0x245920;
             FUN_00247210();
             *(undefined4 *)(puVar5 + -4) = 0x245924;
-            FUN_0024669e();
+            set_vram_tiles();
             *(undefined4 *)(puVar5 + -4) = 0x245928;
-            FUN_0024690c();
+            update_controller_state();
             *(undefined4 *)(puVar5 + -4) = 0x24592c;
-            FUN_00246860();
+            initialize_input_state();
             *(undefined4 *)(puVar5 + -4) = 0x245930;
             apply_scroll_offsets();
             *(undefined4 *)(puVar5 + -4) = 0x245934;
@@ -8945,7 +8945,7 @@ void FUN_0024d5c0(void) {
             *(undefined4 *)(puVar5 + -4) = 0x245938;
             render_menu_text();
             *(undefined4 *)(puVar5 + -4) = 0x24593c;
-            FUN_002464c8();
+            apply_palette_colors();
             *(undefined4 *)(puVar5 + -4) = 0x245940;
             FUN_00248e58();
             *(undefined4 *)(puVar5 + -4) = 0x245944;
@@ -8992,7 +8992,7 @@ LAB_0024579c:
           *(undefined4 *)(puVar5 + -4) = 0x24d6aa;
           FUN_0024cb8c();
           *(undefined4 *)(puVar5 + -4) = 0x24d6ae;
-          FUN_00247652();
+          poll_vdp_ready();
           *(undefined4 *)(puVar5 + -4) = 0x24d6b2;
           FUN_0024d744();
           DAT_00ffff98 = '\0';
@@ -9027,7 +9027,7 @@ void FUN_0024d69e(void) {
     *(undefined4 *)((int)register0x0000003c + -4) = 0x24d6aa;
     FUN_0024cb8c();
     *(undefined4 *)((int)register0x0000003c + -4) = 0x24d6ae;
-    FUN_00247652();
+    poll_vdp_ready();
     *(undefined4 *)((int)register0x0000003c + -4) = 0x24d6b2;
     FUN_0024d744();
     DAT_00ffff98 = '\0';
@@ -9057,7 +9057,7 @@ void FUN_0024d69e(void) {
       _DAT_00ffa6bc = 0xbc614e;
     }
     *(undefined4 *)((int)register0x0000003c + -4) = 0x245800;
-    FUN_002476ac();
+    flush_vram_fifo();
     *(undefined4 *)((int)register0x0000003c + -4) = 0x245804;
     FUN_0024b47a();
     *(undefined4 *)((int)register0x0000003c + -4) = 0x245808;
@@ -9167,11 +9167,11 @@ void FUN_0024d69e(void) {
       *(undefined4 *)((int)register0x0000003c + -4) = 0x245920;
       FUN_00247210();
       *(undefined4 *)((int)register0x0000003c + -4) = 0x245924;
-      FUN_0024669e();
+      set_vram_tiles();
       *(undefined4 *)((int)register0x0000003c + -4) = 0x245928;
-      FUN_0024690c();
+      update_controller_state();
       *(undefined4 *)((int)register0x0000003c + -4) = 0x24592c;
-      FUN_00246860();
+      initialize_input_state();
       *(undefined4 *)((int)register0x0000003c + -4) = 0x245930;
       apply_scroll_offsets();
       *(undefined4 *)((int)register0x0000003c + -4) = 0x245934;
@@ -9179,7 +9179,7 @@ void FUN_0024d69e(void) {
       *(undefined4 *)((int)register0x0000003c + -4) = 0x245938;
       render_menu_text();
       *(undefined4 *)((int)register0x0000003c + -4) = 0x24593c;
-      FUN_002464c8();
+      apply_palette_colors();
       *(undefined4 *)((int)register0x0000003c + -4) = 0x245940;
       FUN_00248e58();
       *(undefined4 *)((int)register0x0000003c + -4) = 0x245944;
@@ -12387,7 +12387,7 @@ LAB_0025a0e8:
         FUN_0024acbc();
         FUN_0024cb8c();
         FUN_0024d2c0();
-        FUN_00247652();
+        poll_vdp_ready();
         FUN_0024791c();
         FUN_0024792e();
         DAT_00ffa6cf = '\0';
